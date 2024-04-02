@@ -1,0 +1,92 @@
+<div class="container">
+  <div class="card-containers">
+     <div class="title my-3">
+        <h1>My Portfolio</h1>
+        <h2>Money in Wallet: ${{walletBalance | number:'1.2-2'}}</h2>
+     </div>
+
+     @for (item of portfolio; track $index) {
+      <div class="row">
+        <div class="col-md-12">
+          <div class="portfolio-card border">
+            <div class="border-bottom card-bg d-flex align-items-center p-2">
+            <h2 class="mb-0">{{item.profile.ticker}}</h2>
+            <h4 class="mb-0 ms-2">{{item.profile.name}}</h4>
+            </div>
+            <div class="body p-2">
+             <div class="row">
+              <div class="col-md-6">
+                <div class="group">
+                  <h4 class="mb-0">Quantity:</h4>
+                  <h4 class="mb-0">{{item.total_units}}</h4>
+                </div>
+                <div class="group">
+                  <h4 class="mb-0">Avg Cost/Share:</h4>
+                  <h4 class="mb-0">{{item.avg_buy_price | number:'1.2-2'}}</h4>
+                </div>
+                <div class="group">
+                  <h4 class="mb-0">Total Cost</h4>
+                  <h4 class="mb-0">{{item.avg_buy_price*item.total_units | number:'1.2-2'}}</h4>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="group">
+                  <h4 class="mb-0">Change:</h4>
+                  <h4 class="mb-0 d-flex align-items-center "
+                  [ngClass]="{
+                    'text-success': checkValue(item) > 0,
+                    'text-danger': checkValue(item) < 0,
+                    'text-dark': checkValue(item) === 0
+                 }"
+                  >
+                    <mat-icon  *ngIf="checkValue(item) > 0 && checkValue(item) != 0" class="caret ">arrow_drop_up</mat-icon>
+                  <mat-icon *ngIf="checkValue(item) < 0 && checkValue(item) != 0" class="caret ">arrow_drop_down</mat-icon>
+                    {{((item.quote.c*item.total_units)-(item.avg_buy_price*item.total_units))*100/(item.avg_buy_price*item.total_units) | number:'1.2-2'}}</h4>
+                </div>
+                <div class="group">
+                  <h4 class="mb-0">Current Price:</h4>
+                  <h4 class="mb-0 text-danger"
+                  [ngClass]="{
+                    'text-success': checkValue(item) > 0,
+                    'text-danger': checkValue(item) < 0,
+                    'text-dark': checkValue(item) === 0
+                 }"
+                  >{{item.quote.c | number:'1.2-2'}}</h4>
+                </div>
+                <div class="group">
+                  <h4 class="mb-0">Market Value:</h4>
+                  <h4 class="mb-0 text-danger"
+                  [ngClass]="{
+                    'text-success': checkValue(item) > 0,
+                    'text-danger': checkValue(item) < 0,
+                    'text-dark': checkValue(item) === 0
+                 }"
+                  >{{item.quote.c*item.total_units | number:'1.2-2'}}</h4>
+                </div>
+              </div>
+             </div>
+            </div>
+            <div class="border-top card-bg d-flex p-2">
+              <button class="btn btn-primary"
+              (click)="buy(item)" 
+              type="button">
+                Buy
+              </button>
+              <button class="btn btn-danger ms-2"
+              (click)="sell(item)" 
+               type="button">
+                Sell
+              </button>
+            </div>
+          </div>
+        </div>
+       </div>
+     }
+   @if(portfolio.length==0 && !commonService.isLoading){
+    <div class="alert alert-warning" role="alert">
+      Currently you don't have any stock.
+    </div>
+     } 
+
+     </div>
+</div>

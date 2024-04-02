@@ -1,0 +1,36 @@
+<div class="d-flex align-items-center p-2 justify-content-between" >
+ <div> <h1 class="mb-0" mat-dialog-title>{{ data.source }}</h1>
+  <span>{{ data?.datetime | date : "mediumDate" }}</span>
+</div>
+  <button (click)="close()" 
+  class="btn text-primary">
+  <mat-icon >close</mat-icon>
+</button></div>
+  <hr>
+  <div mat-dialog-content>
+   <div class="container">
+    <div class="row">
+      <div class="col-md-12 ">
+        <h2 class="mb-0">{{ data.headline }}</h2>
+        <p>{{ data.summary }}</p>
+        
+        <p>For more details click <a
+          [href]="data?.url"
+          target="_blank"
+          >here</a></p>
+        
+      </div>
+    </div>
+    <div class="row border-1 my-3 mx-2">
+      <span>Share</span>
+      <div class="col-md-12 ">
+        <a href="#">
+          <img src="assets/images/x.png" class="logo-img">
+        </a>
+        <a href="#">
+        <img src="assets/images/fb.jpg" class="logo-img-fb ms-2">
+      </a>
+      </div>
+    </div>
+   </div>
+    </div>

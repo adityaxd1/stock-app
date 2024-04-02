@@ -1,0 +1,13 @@
+.card-containers {
+  max-width: 800px;
+  margin: auto;
+}
+.card-bg{
+ background-color: rgb(246 246 246);
+}
+.group{
+  display: flex;
+  justify-content: space-between;
+  h4{font-weight: 500;
+  }
+}

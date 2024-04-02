@@ -1,0 +1,244 @@
+@if (this.stockDetailsResult().profile?.ticker && !this.commonService.isLoading) {
+<div class="container" >
+   <div class="row pt-4">
+      <div class="col-md-4 mt-2 text-center">
+         <h1
+            class="display-5 symbol mb-1 d-flex justify-content-center align-items-center gap-2"
+         >
+            <span>{{ this.stockDetailsResult()?.profile?.ticker }}</span>
+            @if (this.stockDetailsResult()?.is_in_wishlist) {
+            <button
+               type="button"
+               (click)="
+                  onRemoveWishlist(this.stockDetailsResult()?.profile?.ticker)
+               "
+               class="btn p-0"
+            >
+               <i class="bi bi-star-fill star-icon text-warning"></i>
+            </button>
+            }@else {
+            <button
+               type="button"
+               (click)="
+                  onAddWishList(this.stockDetailsResult()?.profile?.ticker)
+               "
+               class="btn p-0"
+            >
+               <i class="bi bi-star star-icon"></i>
+            </button>
+            }
+         </h1>
+         <h3 class="mb-1 company-details">
+            {{ this.stockDetailsResult()?.profile?.name }}
+         </h3>
+         <p class="market-name mb-0">
+            {{ this.stockDetailsResult()?.profile?.exchange }}
+         </p>
+         <div class="buttons mt-2">
+            <button class="btn btn-success me-2" (click)="buy()" type="button">Buy</button>
+            @if (portfolioQuantity>0) {
+               <button class="btn btn-danger" (click)="sell()" type="button">Sell</button>
+            }
+            
+         </div>
+      </div>
+
+      <div class="col-md-4 mt-2 text-center">
+         <div
+            class="company-logo d-flex justify-content-center align-items-center"
+            style="height: 100px"
+         >
+            <img [src]="this.stockDetailsResult()?.profile?.logo" alt="" />
+         </div>
+         <p
+            class="market-status mt-3"
+            [ngClass]="{
+               'text-success': isMarketOpen(
+                  this.stockDetailsResult()?.quote?.t
+               ),
+               'text-danger': !isMarketOpen(this.stockDetailsResult()?.quote?.t * 1000)
+            }"
+         >
+            Market is
+            {{
+               isMarketOpen(this.stockDetailsResult()?.quote?.t * 1000)
+                  ? "Open"
+                  : "Closed"
+            }}
+         </p>
+      </div>
+
+      <div class="col-md-4 mt-2 text-center">
+         <div class="prices down"
+         [ngClass]="{
+            'text-success': this.stockDetailsResult()?.quote?.d > 0,
+            'text-danger': this.stockDetailsResult()?.quote?.d < 0,
+            'text-dark': this.stockDetailsResult()?.quote?.d === 0
+         }"
+         >
+            <h1 class="total-valuation-text mb-1">
+               {{ this.stockDetailsResult()?.quote?.c | number : "1.2-2" }}
+            </h1>
+            <h3
+               class="market-price-status-percent mb-1 d-flex justify-content-center align-items-center "
+              
+            >
+            <mat-icon  *ngIf="this.stockDetailsResult()?.quote?.d > 0 && this.stockDetailsResult()?.quote?.d != 0" class="caret">arrow_drop_up</mat-icon>
+                  <mat-icon *ngIf="this.stockDetailsResult()?.quote?.d < 0 && this.stockDetailsResult()?.quote?.d != 0" class="caret">arrow_drop_down</mat-icon>
+            <span>
+               {{ this.stockDetailsResult()?.quote?.d | number : "1.2-2" }}
+               ({{ this.stockDetailsResult()?.quote?.dp | number : "1.2-2" }}%)
+            </span>
+            </h3>
+            <p class="checked-date-time">
+               {{ timestapToString(this.stockDetailsResult()?.quote?.t * 1000) }}
+            </p>
+         </div>
+      </div>
+   </div>
+
+   <!-- content tab -->
+   <mat-tab-group selectedIndex="0" animationDuration="0ms">
+      <mat-tab label="Summary">
+         <div class="row w-100 m-0 mb-2">
+            <div class="col-md-6 border mt-2 p-0">
+               <div class="pad-panel">
+                  <p class="mb-1">
+                     <strong>High Price:</strong>
+                     {{ this.stockDetailsResult()?.quote?.h }}
+                  </p>
+                  <p class="mb-1">
+                     <strong>Low Price :</strong>
+                     {{ this.stockDetailsResult()?.quote?.l }}
+                  </p>
+                  <p class="mb-1">
+                     <strong>Open Price :</strong>
+                     {{ this.stockDetailsResult()?.quote?.o }}
+                  </p>
+                  <p class="mb-1">
+                     <strong>Prev. Close</strong
+                     >{{ this.stockDetailsResult()?.quote?.pc }}
+                  </p>
+               </div>
+
+               <div class="text-center">
+                  <h2 class="text-decoration-underline">About the Company</h2>
+                  <div class="">
+                     <p class="mb-2">
+                        <strong>IPO Start date :</strong>
+                        {{ this.stockDetailsResult()?.profile?.ipo }}
+                     </p>
+                     <p class="mb-2">
+                        <strong>Indurstry</strong>
+                        {{
+                           this.stockDetailsResult()?.profile?.finnhubIndustry
+                        }}
+                     </p>
+                     <p class="mb-2">
+                        <strong>WebPage : &nbsp;&nbsp;</strong>
+                        <a
+                           [href]="this.stockDetailsResult()?.profile?.weburl"
+                           target="_blank"
+                           class=""
+                           >{{ this.stockDetailsResult()?.profile?.weburl }}</a
+                        >
+                     </p>
+                     <div class="">
+                        <p class="mb-1"><strong>Company Peers</strong></p>
+                        <p style="line-break: anywhere;">
+                           @for (peer of this.stockDetailsResult()?.peers ;
+                           track $index) {
+                           <a [routerLink]="'/search/' + peer" class="mx-1">{{
+                              peer
+                           }}</a>
+
+                           }
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-md-6">
+               <app-stock-chart [ticker]="this.ticker"></app-stock-chart>
+            </div>
+         </div>
+      </mat-tab>
+
+      <mat-tab label="Top News">
+         <div class="container mt-2">
+            <div class="row">
+               <div
+                  *ngFor="let newsItem of stockNews$ | async"
+                  class="col-md-6"
+               >
+                  <app-news-card [newsItem]="newsItem"></app-news-card>
+               </div>
+            </div>
+         </div>
+      </mat-tab>
+
+      <mat-tab label="Charts">
+         <app-chart [ticker]="this.ticker"></app-chart>
+      </mat-tab>
+      <mat-tab label="Insight">
+
+         <div class="container-fluid">
+            <div class="row my-3">
+               <div class="col-md-12 text-center">
+                  <h2>Insider Sentiments</h2>
+               </div>
+               <div class="col-md-6 mx-auto">
+                 <table>
+                  <thead>
+                     <th>{{this.stockDetailsResult()?.profile?.name}}</th>
+                     <th>MSPR</th>
+                     <th>Change</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                     <th>Total</th>
+                     <td>{{insightsTable['totalmspr']}}</td>
+                     <td>{{insightsTable['totalchange']}}</td>
+                    </tr>
+                    <tr>
+                     <th>Positive</th>
+                     <td>{{insightsTable['positivemspr']}}</td>
+                     <td>{{insightsTable['positivechange']}}</td>
+                    </tr>
+                    <tr>
+                     <th>Negative</th>
+                     <td>{{insightsTable['negativemspr']}}</td>
+                     <td>{{insightsTable['negativechange']}}</td>
+                    </tr>
+                  </tbody>
+                 </table>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-lg-6">
+               <app-recommended-trends [ticker]="ticker"></app-recommended-trends>
+            </div>
+            <div class="col-lg-6">
+               <app-historical-eps [ticker]="ticker"></app-historical-eps>
+            </div>
+         </div>
+
+      </mat-tab>
+   </mat-tab-group>
+</div>
+}
+
+@if(!this.stockDetailsResult().profile?.ticker && !commonService.isLoading && !localLoader){
+   
+   <div class="container mt-3" >
+      <div class="alert alert-danger" role="alert">
+      No data found. Please enter a valid Ticker.
+    </div>
+    
+   </div>
+}
+<!--
+   ################# Modal  ############
+ -->

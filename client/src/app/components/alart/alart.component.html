@@ -1,0 +1,39 @@
+<div class="container my-2">
+   @for (alert of alertService.messages(); track alert.id) {
+   <!-- alert type -->
+   @if (alert.type==="success") {
+
+   <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <p class="mb-0">{{ alert.message }}</p>
+      <button
+         (click)="alertService.close(alert.id)"
+         type="button"
+         class="btn-close"
+         aria-label="Close"
+      ></button>
+   </div>
+   }@else if (alert.type==="error") {
+
+   <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <p class="mb-0">{{ alert.message }}</p>
+      <button
+         (click)="alertService.close(alert.id)"
+         type="button"
+         class="btn-close"
+         aria-label="Close"
+      ></button>
+   </div>
+   }@else {
+
+   <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <p class="mb-0">{{ alert.message }}</p>
+      <button
+         (click)="alertService.close(alert.id)"
+         type="button"
+         class="btn-close"
+         aria-label="Close"
+      ></button>
+   </div>
+
+   } }
+</div>

@@ -1,0 +1,45 @@
+<div class="d-flex align-items-center p-2 justify-content-between" >
+  <h1 class="mb-0" mat-dialog-title>{{data.profile.ticker}} </h1>
+  <button  (click)="close()" 
+  class="btn text-primary">
+  <mat-icon >close</mat-icon>
+</button></div>
+  <hr>
+  <div mat-dialog-content>
+   <div class="container">
+    <div class="row">
+      <div class="col-md-12 d-flex">
+        <h6>Current price:</h6>
+        <h6 class="ms-2">{{data.quote.c | number:'1.2-2'}}</h6>
+      </div>
+      <div class="col-md-12 d-flex">
+        <h6>Money in wallet:</h6>
+        <h6 class="ms-2">${{walletBalance | number:'1.2-2'}}</h6>
+      </div>
+      <div class="col-md-12 d-flex">
+        <h6>Available Quantity:</h6>
+        <h6 class="ms-2">{{portfolioQuantity | number:'1.2-2'}}</h6>
+      </div>
+      <div class="col-md-12 d-flex">
+        <h6>Quantity:</h6>
+          <input class="form-control ms-2" 
+          type="number"
+          (keyup)="change($event)"
+          [(ngModel)]="quantity" />
+      </div>
+      <span class="text-danger" *ngIf="portfolioQuantity<quantity">
+      You cannot sell the stocks that you don't have!</span>
+
+    </div>
+   </div>
+    </div>
+    <hr>
+  <div mat-dialog-actions class="d-flex p-2 justify-content-between  ">
+    <h6>
+      Total: {{total}}
+    </h6>
+    <button 
+    [disabled]="portfolioQuantity<quantity && quantity>0"
+    (click)="submit()"
+    class="btn btn-success">Sell</button>
+  </div>

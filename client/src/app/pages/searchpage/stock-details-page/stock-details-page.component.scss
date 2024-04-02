@@ -1,0 +1,52 @@
+.symbol {
+   font-size: 2.5rem;
+   font-weight: 500;
+}
+
+.company-details {
+   font-size: 1.2rem;
+}
+
+.prices.down {
+   color: red;
+}
+.prices.up {
+   color: green;
+}
+.company-logo {
+   height: 100px;
+   & > img {
+      width: -moz-fit-content;
+      width: fit-content;
+      height: 100%;
+      object-fit: contain;
+   }
+}
+
+.star-icon {
+   vertical-align: top;
+   font-size: 1.4em;
+}
+
+.news-card {
+   .news-card-image {
+      width: 100%;
+      min-height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+   }
+}
+
+.pad-panel{
+   padding: 2rem 1rem 2rem 4rem;
+}
+table{
+width: 100%;
+   th, td{
+      padding: 10px;
+      text-align: center;
+   }
+   tr{
+      border-bottom: 1px solid rgb(177, 177, 177);
+   }
+}

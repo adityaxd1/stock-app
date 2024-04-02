@@ -1,0 +1,24 @@
+.card-containers {
+   max-width: 800px;
+   margin: auto;
+}
+.prices{
+   h1{
+      font-size: 2rem !important;
+   }
+   h2{
+      font-size: 1.2rem;
+   }
+}
+.price-up {
+   color: green;
+}
+.price-down {
+   color: red;
+}
+
+.card .btn-close{
+   font-size: 10px;
+   margin-bottom: 10px;
+}
+

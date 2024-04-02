@@ -1,0 +1,42 @@
+<form class="example-form">
+   <div class="">
+      <h1 class="text-center text-uppercase">Stock Search</h1>
+      <div class="position-relative">
+         <input
+         type="text"
+         placeholder="Enter stock ticker symbol"
+         [matAutocomplete]="stockSearch"
+         #searchInput
+         class="form-control rounded-pill"
+      />
+      <mat-icon class="search-icon" (click)="search()">search</mat-icon>
+      <mat-icon class="close-icon" (click)="reset()" >close</mat-icon>
+      </div>
+     
+   </div>
+
+   <mat-autocomplete
+      (optionSelected)="onSelectedValue($event)"
+      autoActiveFirstOption
+      #stockSearch="matAutocomplete"
+   >
+      @if (this.searching()) {
+      <mat-option>
+         <mat-progress-spinner
+            color="primary"
+            value="50"
+            mode="indeterminate"
+         />
+      </mat-option>
+      }
+      <!-- Showing Auto Complete -->
+      @if(!this.searching()){ @for (option of options(); track option) {
+      <mat-option [value]="option.displaySymbol"
+         >{{ option.displaySymbol }}&nbsp;&nbsp;| &nbsp;{{
+            option.description
+         }}</mat-option
+      >
+      }}
+   </mat-autocomplete>
+   <!-- </mat-form-field> -->
+</form>

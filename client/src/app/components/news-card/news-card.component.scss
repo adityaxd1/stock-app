@@ -1,0 +1,22 @@
+.news-card{
+  min-height: 150px;
+  max-height: 150px;
+  cursor: pointer;
+}
+.logo-img{
+  max-height: 120px;
+  min-height: 120px;
+  object-fit: cover;
+}
+.text-md-center{
+  text-align: left;
+}
+@media (max-width: 768px){
+  .news-card{
+    min-height: auto;
+    max-height: 100%;
+  }
+  .text-md-center{
+    text-align: center;
+  }
+}

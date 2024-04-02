@@ -1,0 +1,20 @@
+.navbar {
+   background-color: #2123A9;
+   .navbar-brand{
+      color: white;
+   }
+   .nav-item a:not(.btn.btn-outline-primary) {
+      color: white;
+   }
+   .nav-item > a.btn.btn-outline-primary {
+      color: white;
+      text-align: var(--bs-btn-color);
+      &:hover {
+         color: white;
+      }
+   }
+}
+.active{
+   border: 1px solid white;
+   border-radius: 15px;
+}
