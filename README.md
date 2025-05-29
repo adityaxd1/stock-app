@@ -9,7 +9,7 @@ A live stock analysis tool featuring a modern Angular front-end, Node.js/Express
 - **Real-time analysis:** Slashed data-processing time by 50% for streaming stock feeds  
 - **High-fidelity charts:** Integrated HighCharts with Google Cloud for interactive dashboards and 99.9% uptime  
 - **Low-latency APIs:** Added caching layers to cut API latency by 35%  
-- **Mobile companion:** iOS app that boosted daily active users by 20% made via Swift
+- **Mobile companion:** iOS app that boosted daily active users by 20%, made with Swift
 
 ## Tech Stack
 
