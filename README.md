@@ -1,4 +1,8 @@
-# Stock Trading & Analytics Platform | Demo Link for iOS App : https://youtu.be/diBCFhKEhyk (WebApp is not hosted anymore as GCP & MongoDB clusters are terminated)
+# Stock Trading & Analytics Platform 
+
+### Demo Link for iOS App : https://youtu.be/diBCFhKEhyk 
+#### WebApp is not hosted anymore as GCP & MongoDB clusters are terminated
+
 
 A live stock analysis tool featuring a modern Angular front-end, Node.js/Express back-end, and MongoDB, delivering real-time insights with sub-second latency and 99.9% uptime :contentReference[oaicite:1]{index=1}.
 
